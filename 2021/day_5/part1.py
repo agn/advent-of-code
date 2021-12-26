@@ -12,10 +12,10 @@ with open('input', 'r') as input:
         elif y1 == y2:
             hlines.append([(int(x1),int(y1)),(int(x2),int(y2))])
 
-print('Horizontal lines:', len(hlines), hlines)
-print('Vertical lines:', len(vlines), vlines)
+print('Horizontal lines:', hlines)
+print('Vertical lines:', len(vlines))
 points = []
-intersection = 0
+overlapping_points = []
 
 for line in vlines:
     #print('vline>>', line)
@@ -34,7 +34,7 @@ for line in vlines:
 
 assert (798,666) in points
 assert (628,339) in points
-print('Points', points, len(points))
+print('Vertical Points', len(points))
 
 hpoints = []
 for line in hlines:
@@ -51,7 +51,23 @@ for line in hlines:
             hpoints.append((x,y))
         hpoints.append((x2,y))
 
-print(hpoints, len(hpoints))
-print('Intersections:', intersection)
+print('Horizontal points', len(hpoints))
 assert (700,444) in hpoints
 assert (376,128) in hpoints
+
+
+for _ in hpoints:
+    if hpoints.count(_) > 1: overlapping_points.append(_)
+
+for _ in points:
+    if points.count(_) > 1: 
+        if not _ in overlapping_points:
+            overlapping_points.append(_)
+
+for _ in set(points):
+    if _ in hpoints:
+        if not _ in overlapping_points:
+            overlapping_points.append(_)
+
+
+print('Overlapping points:', overlapping_points, len(overlapping_points))
